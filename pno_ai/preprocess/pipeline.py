@@ -4,7 +4,7 @@ from pretty_midi import ControlChange
 import six
 from .sequence_encoder import SequenceEncoder
 import numpy as np
-from helpers import vectorize
+from pno_ai.helpers import vectorize
 
 class PreprocessingError(Exception):
     pass
