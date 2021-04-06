@@ -5,10 +5,56 @@ from pno_ai.preprocess import PreprocessingPipeline
 from pno_ai.helpers import prepare_batches
 from pno_ai.train import batch_to_tensors
 import torch
+import torch.nn as nn
 from torch.utils.data import TensorDataset, RandomSampler, DataLoader
 import numpy as np
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 pin_memory = (device.type == "cuda")
+
+
+class LSTMClassifier(nn.Module):
+    """
+    A regular one layer LSTM classifier using LSTMCell -> FFNetwork structure
+    """
+    def __init__(self, input_dim, hidden_dim, label_size, device=torch.device("cuda"), dropout_rate=0.1):
+        super().__init__()
+        self.lstm = nn.LSTMCell(input_dim, hidden_dim)
+        self.hidden2ff = nn.Linear(hidden_dim,  int(np.sqrt(hidden_dim)))
+        self.ff2label = nn.Linear(int(np.sqrt(hidden_dim)), label_size)
+        self.hidden_dim = hidden_dim
+        self.sigmoid = nn.Sigmoid()
+        self.dropout = nn.Dropout(dropout_rate)
+        self.device = device
+        self.initialize_weights()
+
+    def initialize_weights(self):
+        for name, param in self.lstm.named_parameters():
+            if 'bias' in name:
+                nn.init.constant_(param, 0.0001)
+            elif 'weight' in name:
+                nn.init.xavier_normal_(param)
+        for name, param in self.hidden2ff.named_parameters():
+            if 'bias' in name:
+                nn.init.constant_(param, 0.0001)
+            elif 'weight' in name:
+                nn.init.xavier_normal_(param)
+        for name, param in self.ff2label.named_parameters():
+            if 'bias' in name:
+                nn.init.constant_(param, 0.0001)
+            elif 'weight' in name:
+                nn.init.xavier_normal_(param)
+
+    def forward(self, x):
+
+        hs = torch.zeros(x.size(0), self.hidden_dim).to(self.device)
+        cs = torch.zeros(x.size(0), self.hidden_dim).to(self.device)
+
+        for i in range(x.size()[1]):
+            hs, cs = self.lstm(x[:, i], (hs, cs))
+
+        hs = self.dropout(hs)
+        hs = self.hidden2ff(hs)
+        return self.sigmoid(self.ff2label(hs))
 
 
 sampling_rate = 125

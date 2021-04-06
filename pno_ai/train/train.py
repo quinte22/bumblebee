@@ -1,5 +1,5 @@
-from helpers import prepare_batches
-from .custom import Accuracy, smooth_cross_entropy, TFSchedule
+from pno_ai.helpers import prepare_batches
+from pno_ai.train.custom import Accuracy, smooth_cross_entropy, TFSchedule
 import torch
 import torch.nn as nn
 import time
