@@ -144,7 +144,7 @@ def train(model, training_data, validation_data,
                 y_hat = model(x, x_mask).transpose(1,2)
                 loss = loss_function(y_hat, y)
                 val_loss += loss.item()
-                val_accuracy += accuracy(y_hat, y, mask)
+                val_accuracy += accuracy(y_hat, y, x_mask)
                 n_batches += 1
 
             if checkpoint_path is not None:
