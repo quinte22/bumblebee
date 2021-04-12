@@ -94,7 +94,8 @@ def sample(model, sample_length, prime_sequence=[], temperature=1):
 
     #add singleton dimension for the batch
     input_tensor = torch.LongTensor(input_sequence).unsqueeze(0)
-
+    device = torch.device('cuda')
+    input_tensor = input_tensor.to(device)
     for i in range(sample_length):
         #select probabilities of *next* token
         out = model(input_tensor)[0, -1, :]
