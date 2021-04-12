@@ -144,7 +144,7 @@ class LongMultiheadedAttention(nn.Module):
     fraction of the embedding space and expresses attention vectors for each sequence position as a weighted average of all (earlier) positions.
     """
 
-    def __init__(self, d_model, attention_window=32, heads=8, dropout=0.1, relative_pos=False):
+    def __init__(self, d_model, heads=8, dropout=0.1, relative_pos=False, attention_window=32):
 
         super().__init__()
         if d_model % heads != 0:
@@ -206,9 +206,11 @@ class LongMultiheadedAttention(nn.Module):
             diagonal_mask = self._sliding_chunks_query_key_matmul(
                 float_mask.new_ones(size=float_mask.size()), float_mask, self.one_sided_attn_window_size
             )
+            print(f"diagonal_mask size (SRL) : {diagonal_mask.shape}")
 
             # pad local attention probs
             attn_scores += diagonal_mask
+            print(f"attn_scores size : {attn_scores.shape}")
             attn_probs = F.softmax(attn_scores, dim=-1, dtype=torch.float32)  # use fp32 for numerical stability
             attn_probs = attn_probs.type_as(attn_scores)
             del attn_scores
@@ -217,9 +219,10 @@ class LongMultiheadedAttention(nn.Module):
             attn_output = self._sliding_chunks_matmul_attn_probs_value(
                 attn_probs, values, self.one_sided_attn_window_size
             )
-            assert attn_output.size() == (b, t, self.num_heads, self.head_dim), "Unexpected size"
+            assert attn_output.size() == (b, t, self.heads, s), "Unexpected size"
             attn_output = attn_output.transpose(0, 1).reshape(t, b, e).contiguous()
-            outputs = (attn_output.transpose(0, 1),)
+            outputs = attn_output.transpose(0, 1)
+            print(f"outputs size {outputs.shape}")
             return self.recombine_heads(outputs)
 
         # Compute scaled dot-product self-attention
@@ -264,6 +267,49 @@ class LongMultiheadedAttention(nn.Module):
         padded_qe = padded_qe.view(s[0], s[1], s[3], s[2])
         # take out first (padded) row
         return padded_qe[:, :, 1:, :]
+
+    @staticmethod
+    def _chunk(hidden_states, window_overlap):
+        """convert into overlapping chunks. Chunk size = 2w, overlap size = w"""
+
+        # non-overlapping chunks of size = 2w
+        hidden_states = hidden_states.view(
+            hidden_states.size(0),
+            hidden_states.size(1) // (window_overlap * 2),
+            window_overlap * 2,
+            hidden_states.size(2),
+        )
+
+        # use `as_strided` to make the chunks overlap with an overlap size = window_overlap
+        chunk_size = list(hidden_states.size())
+        chunk_size[1] = chunk_size[1] * 2 - 1
+
+        chunk_stride = list(hidden_states.stride())
+        chunk_stride[1] = chunk_stride[1] // 2
+        return hidden_states.as_strided(size=chunk_size, stride=chunk_stride)
+
+    @staticmethod
+    def _pad_and_transpose_last_two_dims(hidden_states_padded, padding):
+        """pads rows and then flips rows and columns"""
+        hidden_states_padded = F.pad(
+            hidden_states_padded, padding
+        )  # padding value is not important because it will be overwritten
+        hidden_states_padded = hidden_states_padded.view(
+            *hidden_states_padded.size()[:-2], hidden_states_padded.size(-1), hidden_states_padded.size(-2)
+        )
+        return hidden_states_padded
+
+    @staticmethod
+    def _mask_invalid_locations(input_tensor, affected_seq_len) -> torch.Tensor:
+        beginning_mask_2d = input_tensor.new_ones(affected_seq_len, affected_seq_len + 1).tril().flip(dims=[0])
+        beginning_mask = beginning_mask_2d[None, :, None, :]
+        ending_mask = beginning_mask.flip(dims=(1, 3))
+        beginning_input = input_tensor[:, :affected_seq_len, :, : affected_seq_len + 1]
+        beginning_mask = beginning_mask.expand(beginning_input.size())
+        beginning_input.masked_fill_(beginning_mask == 1, -float("inf"))  # `== 1` converts to bool or uint8
+        ending_input = input_tensor[:, -affected_seq_len:, :, -(affected_seq_len + 1):]
+        ending_mask = ending_mask.expand(ending_input.size())
+        ending_input.masked_fill_(ending_mask == 1, -float("inf"))  # `== 1` converts to bool or uint8
 
     def _sliding_chunks_query_key_matmul(self, query: torch.Tensor, key: torch.Tensor, window_overlap: int):
         """

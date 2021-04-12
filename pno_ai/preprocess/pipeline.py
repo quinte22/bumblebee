@@ -4,7 +4,7 @@ from pretty_midi import ControlChange
 import six
 from .sequence_encoder import SequenceEncoder
 import numpy as np
-from pno_ai.helpers import vectorize
+from helpers import vectorize
 
 class PreprocessingError(Exception):
     pass
@@ -25,7 +25,7 @@ class PreprocessingPipeline():
     """
     def __init__(self, input_dir, stretch_factors = [0.95, 0.975, 1, 1.025, 1.05],
             split_size = 30, sampling_rate = 125, n_velocity_bins = 32,
-            transpositions = range(-3,4), training_val_split = 0.9, 
+            transpositions = range(-3,4), training_val_split = 0.9,
             max_encoded_length = 512, min_encoded_length = 33):
         self.input_dir = input_dir
         self.split_samples = dict()
@@ -36,16 +36,16 @@ class PreprocessingPipeline():
         #So a sampling rate of 125 hz means a smallest time steps of 8 ms
         self.sampling_rate = sampling_rate
         #Quantize sample dynamics (Velocity 1-127) to a smaller number of bins
-        #this should be an *integer* dividing 128 cleanly: 2,4,8,16,32,64, or 128. 
+        #this should be an *integer* dividing 128 cleanly: 2,4,8,16,32,64, or 128.
         self.n_velocity_bins = n_velocity_bins
         self.transpositions = transpositions
-        
+
         #Fraction of raw MIDI data that goes to the training set
         #the remainder goes to validat
         self.training_val_split = training_val_split
 
         self.encoder = SequenceEncoder(n_time_shift_events = sampling_rate,
-                n_velocity_events = n_velocity_bins, 
+                n_velocity_events = n_velocity_bins,
                 min_events = min_encoded_length,
                 max_events = max_encoded_length)
         self.encoded_sequences = dict()
@@ -70,9 +70,9 @@ class PreprocessingPipeline():
     def run(self):
         """
         Main pipeline call...parse midis, split into test and validation sets,
-        augment, quantize, sample, and encode as event sequences. 
+        augment, quantize, sample, and encode as event sequences.
         """
-        midis = self.parse_files(chdir=True) 
+        midis = self.parse_files(chdir=True)
         total_time = sum([m.get_end_time() for m in midis])
         print("\n{} midis read, or {:.1f} minutes of music"\
                 .format(len(midis), total_time/60))
@@ -101,10 +101,10 @@ class PreprocessingPipeline():
 
     def parse_files(self, chdir=False):
         """
-        Recursively parse all MIDI files in a given directory to 
+        Recursively parse all MIDI files in a given directory to
         PrettyMidi objects.
         """
-        if chdir: 
+        if chdir:
             home_dir = os.getcwd()
             os.chdir(self.input_dir)
 
@@ -133,7 +133,7 @@ class PreprocessingPipeline():
 
     def get_note_sequences(self, midis):
         """
-        Given a list of PrettyMidi objects, extract the Piano track as a list of 
+        Given a list of PrettyMidi objects, extract the Piano track as a list of
         Note objects. Calls the "apply_sustain" method to extract the sustain pedal
         control changes.
         """
@@ -156,15 +156,15 @@ class PreprocessingPipeline():
 
     def apply_sustain(self, piano_data):
         """
-        While the sustain pedal is applied during a midi, extend the length of all 
-        notes to the beginning of the next note of the same pitch or to 
+        While the sustain pedal is applied during a midi, extend the length of all
+        notes to the beginning of the next note of the same pitch or to
         the end of the sustain. Returns a midi notes sequence.
         """
         _SUSTAIN_ON = 0
         _SUSTAIN_OFF = 1
         _NOTE_ON = 2
         _NOTE_OFF = 3
- 
+
         notes = copy.deepcopy(piano_data.notes)
         control_changes = piano_data.control_changes
         #sequence of SUSTAIN_ON, SUSTAIN_OFF, NOTE_ON, and NOTE_OFF actions
@@ -196,11 +196,11 @@ class PreprocessingPipeline():
                     sustain_position = _SUSTAIN_ON
             action_sequence.append((c.time, sustain_position, None))
             cleaned_controls.append((c.time, sustain_position))
-    
+
         action_sequence.extend([(note.start, _NOTE_ON, note) for note in notes])
         action_sequence.extend([(note.end, _NOTE_OFF, note) for note in notes])
         #sort actions by time and type
-    
+
         action_sequence = sorted(action_sequence, key = lambda x: (x[0], x[1]))
         live_notes = []
         sustain = False
@@ -274,7 +274,7 @@ class PreprocessingPipeline():
 
     def split_sequences(self, sequences):
         """
-        Given a list of Note sequences, splits them into samples no longer than 
+        Given a list of Note sequences, splits them into samples no longer than
         a given length. Returns a list of split samples.
         """
 
@@ -333,7 +333,7 @@ class PreprocessingPipeline():
                 #reshift note start and end times to begin at zero
                 note[0] -= sample_start_time
                 note[1] -= sample_start_time
-                #delete this 
+                #delete this
                 if note[0] < 0 or note[1] < 0:
                     raise PreprocessingError
                 if timestep:
@@ -359,7 +359,7 @@ class PreprocessingPipeline():
                 transposed_sample = np.copy(sample)
                 #shift pitches in sample by transposition
                 transposed_sample[:,2] += transposition
-                #should I adjust pitches that fall out of the range of 
+                #should I adjust pitches that fall out of the range of
                 #a piano's 88 keys? going to be pretty uncommon.
                 transposed_samples.append(transposed_sample)
 
