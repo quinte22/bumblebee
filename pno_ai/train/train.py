@@ -1,5 +1,5 @@
-from pno_ai.helpers import prepare_batches
-from pno_ai.train.custom import Accuracy, smooth_cross_entropy, TFSchedule
+from helpers import prepare_batches
+from .custom import Accuracy, smooth_cross_entropy, TFSchedule
 import torch
 import torch.nn as nn
 import time
@@ -23,7 +23,7 @@ def batch_to_tensors(batch, n_tokens, max_length):
         #copy over input sequence data with zero-padding
         #cast to long to be embedded into model's hidden dimension
         x[i, :seq_length] = torch.Tensor(sequence).unsqueeze(0)
-    
+
     x_mask = (x != 0)
     x_mask = x_mask.type(torch.uint8)
 
@@ -34,7 +34,7 @@ def batch_to_tensors(batch, n_tokens, max_length):
     if torch.cuda.is_available():
         return x.cuda(), y.cuda(), x_mask.cuda()
     else:
-        return x, y, x_mask 
+        return x, y, x_mask
 
 def train(model, training_data, validation_data,
         epochs, batch_size, batches_per_print=100, evaluate_per=1,
@@ -63,7 +63,7 @@ def train(model, training_data, validation_data,
 
     if custom_schedule:
         optimizer = TFSchedule(optimizer, model.d_model)
-    
+
     if custom_loss:
         loss_function = smooth_cross_entropy
     else:
@@ -80,7 +80,7 @@ def train(model, training_data, validation_data,
     validation_losses = []
     #pad to length of longest sequence
     #minus one because input/target sequences are shifted by one char
-    max_length = max((len(L) 
+    max_length = max((len(L)
         for L in (training_data + validation_data))) - 1
     for e in range(epochs):
         batch_start_time = time.time()
@@ -93,7 +93,7 @@ def train(model, training_data, validation_data,
             #skip batches that are undersized
             if len(batch[0]) != batch_size:
                 continue
-            x, y, x_mask = batch_to_tensors(batch, model.n_tokens, 
+            x, y, x_mask = batch_to_tensors(batch, model.n_tokens,
                     max_length)
             y_hat = model(x, x_mask).transpose(1,2)
 
