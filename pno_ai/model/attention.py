@@ -39,7 +39,6 @@ class MultiheadedAttention(nn.Module):
     def forward(self, x, mask):
         #batch size, sequence length, embedding dimension
         b, t, e = x.size()
-        print(f"b:{b} T:{t} e:{e} ") # batch 16, sequence length 1024, embedding 64
         h = self.heads
         #each head inspects a fraction of the embedded space
         #head dimension
@@ -50,26 +49,18 @@ class MultiheadedAttention(nn.Module):
         queries, keys, values = [w(x).transpose(1,2)
                 for w, x in zip(self.linears, (x,x,x))]
 
-        print(f' query shape: {queries.shape}')  # B, 8, seq, 8
-        print(f' Key shape: {keys.shape}')  # B, 8, seq, 8
-        print(f' values shape: {values.shape}') # B, 8, seq, 8
-
         if self.relative_pos:
             #apply same position embeddings across the batch
             #Is it possible to apply positional self-attention over
             #only half of all relative distances?
-            Er  = self.Er[:, embedding_start:, :].unsqueeze(0)
-            print(f'ER size : {Er.shape}') # [1, 8, 1024, 8]
-            QEr = torch.matmul(queries, Er.transpose(-1,-2))
-            print(f'QER size : {QEr.shape}') # torch.Size([16, 8, 1024, 1024]) B = 16
+            Er  = self.Er[:, embedding_start:, :].unsqueeze(0)# [1, 8, 1024, 8]
+            QEr = torch.matmul(queries, Er.transpose(-1,-2)) # torch.Size([16, 8, 1024, 1024]) B = 16
 
-            QEr = self._mask_positions(QEr)
-            print(f'QER size after mask: {QEr.shape}') # size doesn't change
+            QEr = self._mask_positions(QEr) # size doesn't change
 
             #Get relative position attention scores
             #combine batch with head dimension
-            SRel = self._skew(QEr).contiguous().view(b*h, t, t)
-            print(f'SRel size : {SRel.shape}')  # 16 * 8 , squence, sequence
+            SRel = self._skew(QEr).contiguous().view(b*h, t, t) # 16 * 8 , squence, sequence
 
         else:
             SRel = torch.zeros([b*h, t, t], device=d())
@@ -80,19 +71,15 @@ class MultiheadedAttention(nn.Module):
         queries = queries / (e ** (1/4))
         keys    = keys / (e ** (1/4))
 
-        scores = torch.bmm(queries, keys.transpose(1, 2))
-        print(f'Scores size : {scores.shape}') # B * heads, seq leng, seq len
-        scores = scores + SRel
-        print(f'Scores size + SREL : {scores.shape}') # B * heads, seq leng, seq len
+        scores = torch.bmm(queries, keys.transpose(1, 2)) # B * heads, seq leng, seq len
+        scores = scores + SRel # B * heads, seq leng, seq len
 
         #(b*h, t, t)
 
         subsequent_mask = torch.triu(torch.ones(1, t, t, device=d()),
-                1)
-        print(f'subsequent_mask size : {subsequent_mask.shape}') # 1, seq length, seq length,
+                1) # 1, seq length, seq length,
 
-        scores = scores.masked_fill(subsequent_mask == 1, -1e9)
-        print(f' Post mask Scores size: {scores.shape}') # B * heads, seq length, seq length,
+        scores = scores.masked_fill(subsequent_mask == 1, -1e9) # B * heads, seq length, seq length,
 
 
         if mask is not None:
@@ -102,22 +89,17 @@ class MultiheadedAttention(nn.Module):
 
 
         #Convert scores to probabilities
-        attn_probs = F.softmax(scores, dim=2)
-        print(f' attn_probs size: {attn_probs.shape}') # B * heads, seq length, seq length,
+        attn_probs = F.softmax(scores, dim=2) # B * heads, seq length, seq length,
 
-        attn_probs = self.dropout(attn_probs)
-        print(f' dropout attn_probs size: {attn_probs.shape}') # B * heads, seq length, seq length,
+        attn_probs = self.dropout(attn_probs)# B * heads, seq length, seq length,
 
         #use attention to get a weighted average of values
-        out = torch.bmm(attn_probs, values).view(b, h, t, s)
-        print(f'out: {out.shape}') # [B, h, seq_len, h]
+        out = torch.bmm(attn_probs, values).view(b, h, t, s)# [B, h, seq_len, h]
         #transpose and recombine attention heads
-        out = out.transpose(1, 2).contiguous().view(b, t, s * h)
-        print(f'out trans: {out.shape}') # [B, seq len, embedding size ie/
+        out = out.transpose(1, 2).contiguous().view(b, t, s * h) # [B, seq len, embedding size ie/
 
         #last linear layer of weights
         outfinal = self.recombine_heads(out)
-        print(f'out_final : {outfinal.shape}')
         return outfinal
 
 
@@ -190,8 +172,8 @@ class LongMultiheadedAttention(nn.Module):
             SRel = self._skew(QEr).contiguous().view(b * h, t, t)
         else:
             queries /= math.sqrt(s)
-            queries = queries.view(t, b, self.heads, s).transpose(0, 1)
-            keys = keys.view(t, b, self.heads, s).transpose(0, 1)
+            queries = queries.reshape(t, b, self.heads, s).transpose(0, 1)
+            keys = keys.reshape(t, b, self.heads, s).transpose(0, 1)
             attn_scores = self._sliding_chunks_query_key_matmul(
                 queries, keys, self.one_sided_attn_window_size
             )
@@ -206,23 +188,20 @@ class LongMultiheadedAttention(nn.Module):
             diagonal_mask = self._sliding_chunks_query_key_matmul(
                 float_mask.new_ones(size=float_mask.size()), float_mask, self.one_sided_attn_window_size
             )
-            print(f"diagonal_mask size (SRL) : {diagonal_mask.shape}")
 
             # pad local attention probs
             attn_scores += diagonal_mask
-            print(f"attn_scores size : {attn_scores.shape}")
             attn_probs = F.softmax(attn_scores, dim=-1, dtype=torch.float32)  # use fp32 for numerical stability
             attn_probs = attn_probs.type_as(attn_scores)
             del attn_scores
-            attn_probs = F.dropout(attn_probs, p=self.dropout, training=self.training)
-            values = values.view(t, b, self.heads, s).transpose(0, 1)
+            attn_probs = self.dropout(attn_probs)
+            values = values.reshape(t, b, self.heads, s).transpose(0, 1)
             attn_output = self._sliding_chunks_matmul_attn_probs_value(
                 attn_probs, values, self.one_sided_attn_window_size
             )
             assert attn_output.size() == (b, t, self.heads, s), "Unexpected size"
             attn_output = attn_output.transpose(0, 1).reshape(t, b, e).contiguous()
             outputs = attn_output.transpose(0, 1)
-            print(f"outputs size {outputs.shape}")
             return self.recombine_heads(outputs)
 
         # Compute scaled dot-product self-attention
@@ -310,7 +289,37 @@ class LongMultiheadedAttention(nn.Module):
         ending_input = input_tensor[:, -affected_seq_len:, :, -(affected_seq_len + 1):]
         ending_mask = ending_mask.expand(ending_input.size())
         ending_input.masked_fill_(ending_mask == 1, -float("inf"))  # `== 1` converts to bool or uint8
-
+    @staticmethod
+    def _pad_and_diagonalize(chunked_hidden_states):
+        """
+        shift every row 1 step right, converting columns into diagonals.
+        Example::
+              chunked_hidden_states: [ 0.4983,  2.6918, -0.0071,  1.0492,
+                                       -1.8348,  0.7672,  0.2986,  0.0285,
+                                       -0.7584,  0.4206, -0.0405,  0.1599,
+                                       2.0514, -1.1600,  0.5372,  0.2629 ]
+              window_overlap = num_rows = 4
+             (pad & diagonalize) =>
+             [ 0.4983,  2.6918, -0.0071,  1.0492, 0.0000,  0.0000,  0.0000
+               0.0000,  -1.8348,  0.7672,  0.2986,  0.0285, 0.0000,  0.0000
+               0.0000,  0.0000, -0.7584,  0.4206, -0.0405,  0.1599, 0.0000
+               0.0000,  0.0000,  0.0000, 2.0514, -1.1600,  0.5372,  0.2629 ]
+        """
+        total_num_heads, num_chunks, window_overlap, hidden_dim = chunked_hidden_states.size()
+        chunked_hidden_states = F.pad(
+            chunked_hidden_states, (0, window_overlap + 1)
+        )  # total_num_heads x num_chunks x window_overlap x (hidden_dim+window_overlap+1). Padding value is not important because it'll be overwritten
+        chunked_hidden_states = chunked_hidden_states.view(
+            total_num_heads, num_chunks, -1
+        )  # total_num_heads x num_chunks x window_overlap*window_overlap+window_overlap
+        chunked_hidden_states = chunked_hidden_states[
+            :, :, :-window_overlap
+        ]  # total_num_heads x num_chunks x window_overlap*window_overlap
+        chunked_hidden_states = chunked_hidden_states.view(
+            total_num_heads, num_chunks, window_overlap, window_overlap + hidden_dim
+        )
+        chunked_hidden_states = chunked_hidden_states[:, :, :, :-1]
+        return chunked_hidden_states
     def _sliding_chunks_query_key_matmul(self, query: torch.Tensor, key: torch.Tensor, window_overlap: int):
         """
         Matrix multiplication of query and key tensors using with a sliding window attention pattern. This
@@ -377,3 +386,45 @@ class LongMultiheadedAttention(nn.Module):
 
         self._mask_invalid_locations(diagonal_attention_scores, window_overlap)
         return diagonal_attention_scores
+
+    def _sliding_chunks_matmul_attn_probs_value(
+        self, attn_probs: torch.Tensor, value: torch.Tensor, window_overlap: int
+    ):
+        """
+        Same as _sliding_chunks_query_key_matmul but for attn_probs and value tensors. Returned tensor will be of the
+        same shape as `attn_probs`
+        """
+        batch_size, seq_len, num_heads, head_dim = value.size()
+
+        assert seq_len % (window_overlap * 2) == 0
+        assert attn_probs.size()[:3] == value.size()[:3]
+        assert attn_probs.size(3) == 2 * window_overlap + 1
+        chunks_count = seq_len // window_overlap - 1
+        # group batch_size and num_heads dimensions into one, then chunk seq_len into chunks of size 2 window overlap
+
+        chunked_attn_probs = attn_probs.transpose(1, 2).reshape(
+            batch_size * num_heads, seq_len // window_overlap, window_overlap, 2 * window_overlap + 1
+        )
+
+        # group batch_size and num_heads dimensions into one
+        value = value.transpose(1, 2).reshape(batch_size * num_heads, seq_len, head_dim)
+
+        # pad seq_len with w at the beginning of the sequence and another window overlap at the end
+        padded_value = F.pad(value, (0, 0, window_overlap, window_overlap), value=-1)
+
+        # chunk padded_value into chunks of size 3 window overlap and an overlap of size window overlap
+        chunked_value_size = (batch_size * num_heads, chunks_count + 1, 3 * window_overlap, head_dim)
+        chunked_value_stride = padded_value.stride()
+        chunked_value_stride = (
+            chunked_value_stride[0],
+            window_overlap * chunked_value_stride[1],
+            chunked_value_stride[1],
+            chunked_value_stride[2],
+        )
+        chunked_value = padded_value.as_strided(size=chunked_value_size, stride=chunked_value_stride)
+
+        chunked_attn_probs = self._pad_and_diagonalize(chunked_attn_probs)
+
+        context = torch.einsum("bcwd,bcdh->bcwh", (chunked_attn_probs, chunked_value))
+        return context.view(batch_size, num_heads, seq_len, head_dim).transpose(1, 2)
+
