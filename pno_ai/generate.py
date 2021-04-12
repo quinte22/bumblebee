@@ -12,8 +12,8 @@ class GeneratorError(Exception):
 def main():
     parser = argparse.ArgumentParser("Script to generate MIDI tracks by sampling from a trained model.")
 
-    parser.add_argument("--model_key", type=str, 
-            help="Key in saved_models/model.yaml, helps look up model arguments and path to saved checkpoint.")
+    parser.add_argument("--model_name", type=str,
+            help="name of the model in saved_models/ folder.")
     parser.add_argument("--sample_length", type=int, default=512,
             help="number of events to generate")
     parser.add_argument("--temps", nargs="+", type=float, 
@@ -31,19 +31,20 @@ def main():
 
     args=parser.parse_args()
 
-    model_key = args.model_key
+    model_name = args.model_name
 
+    # try:
+    #     model_dict = yaml.safe_load(open('saved_models/model.yaml'))[model_key]
+    # except:
+    #     raise GeneratorError(f"could not find yaml information for key {model_key}")
+    #
+    # model_path = model_dict["path"]
+    # model_args = model_dict["args"]
+    model_path = 'saved_models/' + model_name
     try:
-        model_dict = yaml.safe_load(open('saved_models/model.yaml'))[model_key]
-    except:
-        raise GeneratorError(f"could not find yaml information for key {model_key}")
-
-    model_path = model_dict["path"]
-    model_args = model_dict["args"]
-    try:
-        state = torch.load(model_path)
+        model = torch.load(model_path)
     except RuntimeError:
-        state = torch.load(model_path, map_location="cpu")
+        model = torch.load(model_path, map_location="cpu")
     
     n_velocity_events = 32
     n_time_shift_events = 125
@@ -59,8 +60,8 @@ def main():
     else:
         prime_sequence = []
 
-    model = MusicTransformer(**model_args)
-    model.load_state_dict(state, strict=False)
+    # model = MusicTransformer(**model_args)
+    # model.load_state_dict(state, strict=False)
 
     temps = args.temps
 
@@ -79,15 +80,16 @@ def main():
             note_sequence = decoder.decode_sequence(output_sequence, 
                 verbose=True, stuck_note_duration=None)
 
-            output_dir = f"output/{model_key}/{trial_key}/"
+            output_dir = f"output/{model_name}/{trial_key}/"
             file_name = f"sample{i+1}_{temp}"
             write_midi(note_sequence, output_dir, file_name)
 
     for temp in temps:      
         try:
-            subprocess.run(['timidity', f"output/{model_key}/{trial_key}/sample{i+1}_{temp}.midi"])
+            subprocess.run(['timidity', f"output/{model_name}/{trial_key}/sample{i+1}_{temp}.midi"])
         except KeyboardInterrupt:
             continue
+
 
 if __name__ == "__main__":
     main()

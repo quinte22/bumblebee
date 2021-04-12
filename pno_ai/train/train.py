@@ -138,7 +138,7 @@ def train(model, training_data, validation_data,
                 if len(batch[0]) != batch_size:
                     continue
 
-                x, y, x_mask = batch_to_tensors(batch, model.n_tokens, 
+                x, y, x_mask = batch_to_tensors(batch, model.n_tokens,
                         max_length)
 
                 y_hat = model(x, x_mask).transpose(1,2)
@@ -149,7 +149,9 @@ def train(model, training_data, validation_data,
 
             if checkpoint_path is not None:
                 try:
-                    torch.save(model.state_dict(),
+                    # torch.save(model.state_dict(),
+                    #         checkpoint_path+f"_e{e}")
+                    torch.save(model,
                             checkpoint_path+f"_e{e}")
                     print("Checkpoint saved!")
                 except:
