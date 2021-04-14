@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from helpers import clones, d
+import numpy as np
+import torch.nn.init as init
 from .attention import MultiheadedAttention, LongMultiheadedAttention
 import math
 
@@ -14,7 +16,7 @@ class MusicTransformer(nn.Module):
 
     def __init__(self, n_tokens, seq_length=None, d_model=64,
             n_heads=4, depth=2, d_feedforward=512, dropout=0.1,
-            positional_encoding=False, relative_pos=True):
+            positional_encoding=False, relative_pos=True, xavier_init=False):
         """
         Args:
             n_tokens: number of commands/states in encoded musical sequence
@@ -58,6 +60,15 @@ class MusicTransformer(nn.Module):
         self.layers = clones(DecoderLayer(d_model, n_heads,
             d_feedforward, dropout, relative_pos), depth)
         self.norm = nn.LayerNorm(d_model)
+        if xavier_init:
+            self.initialize_weights()
+
+    def initialize_weights(self):
+        for name, param in self.layers.named_parameters():
+            if 'bias' in name:
+                nn.init.constant_(param, 0.0001)
+            elif 'weight' in name:
+                nn.init.xavier_normal_(param)
 
     def forward(self, x, mask=None):
         x = self.embed(x)
@@ -115,7 +126,7 @@ class LongMusicTransformer(nn.Module):
 
     def __init__(self, n_tokens, seq_length=None, d_model=64,
                  n_heads=4, depth=2, d_feedforward=512, dropout=0.1,
-                 positional_encoding=False, relative_pos=True):
+                 positional_encoding=False, relative_pos=True, xavier_init=False):
         """
         Args:
             n_tokens: number of commands/states in encoded musical sequence
@@ -159,6 +170,16 @@ class LongMusicTransformer(nn.Module):
         self.layers = clones(LongDecoderLayer(d_model, n_heads,
                                           d_feedforward, dropout), depth)
         self.norm = nn.LayerNorm(d_model)
+        if xavier_init:
+            self.initialize_weights()
+
+    def initialize_weights(self):
+        for name, param in self.layers.named_parameters():
+            if 'bias' in name:
+                nn.init.constant_(param, 0.0001)
+            elif 'weight' in name:
+                nn.init.xavier_normal_(param)
+            print(f"initialized {name} : {param}")
 
     def forward(self, x, mask=None):
         x = self.embed(x)
@@ -186,6 +207,8 @@ class LongDecoderLayer(nn.Module):
         self.self_attn = LongMultiheadedAttention(size, n_heads,
                                               dropout)
         self.feed_forward = PositionwiseFeedForward(size, d_feedforward, dropout)
+
+
         self.size = size
         # normalize over mean/std of embedding dimension
         self.norm1 = nn.LayerNorm(size)
@@ -201,7 +224,6 @@ class LongDecoderLayer(nn.Module):
         attn = self.self_attn(x, mask)
         x = x + self.dropout1(attn)
         x = self.norm1(x)
-
         ff = self.feed_forward(x)
         x = x + self.dropout2(ff)
         x = self.norm2(x)
@@ -214,6 +236,7 @@ class PositionwiseFeedForward(nn.Module):
         super().__init__()
         self.w_1 = nn.Linear(d_model, d_ff)
         self.w_2 = nn.Linear(d_ff, d_model)
+        # add  xavier initialization
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, x):

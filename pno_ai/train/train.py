@@ -5,6 +5,8 @@ import torch.nn as nn
 import time
 from random import shuffle
 
+# ADD EARLY STOPPING
+
 def batch_to_tensors(batch, n_tokens, max_length):
     """
     Make input, input mask, and target tensors for a batch of seqa batch of sequences.
@@ -39,7 +41,7 @@ def batch_to_tensors(batch, n_tokens, max_length):
 def train(model, training_data, validation_data,
         epochs, batch_size, batches_per_print=100, evaluate_per=1,
         padding_index=-100, checkpoint_path=None,
-        custom_schedule=False, custom_loss=False):
+        custom_schedule=False, custom_loss=False, early_stopping_value=20):
     """
     Training loop function.
     Args:
@@ -54,6 +56,7 @@ def train(model, training_data, validation_data,
         checkpoint_path: (str or None) If defined, save the model's state dict to this file path after validation
         custom_schedule: (bool) If True, use a learning rate scheduler with a warmup ramp
         custom_loss: (bool) If True, set loss function as Cross Entropy with label smoothing
+        early_stopping_value: value of when to stop training for optimization (ie/ validation loss  stops decreasing)
     """
 
     training_start_time = time.time()
@@ -70,6 +73,7 @@ def train(model, training_data, validation_data,
         loss_function = nn.CrossEntropyLoss(ignore_index=padding_index)
     accuracy = Accuracy()
 
+
     if torch.cuda.is_available():
         model.cuda()
         print("GPU is available")
@@ -82,6 +86,8 @@ def train(model, training_data, validation_data,
     #minus one because input/target sequences are shifted by one char
     max_length = max((len(L)
         for L in (training_data + validation_data))) - 1
+    best_val_loss = 1e6
+    early_stopping_counter = 0
     for e in range(epochs):
         batch_start_time = time.time()
         batch_num = 1
@@ -146,7 +152,17 @@ def train(model, training_data, validation_data,
                 val_loss += loss.item()
                 val_accuracy += accuracy(y_hat, y, x_mask)
                 n_batches += 1
+                if val_loss < best_val_loss:
+                    best_val_loss = val_loss
+                    early_stopping_counter = 0
+                else:
+                    early_stopping_counter += 1
 
+                if early_stopping_counter > early_stopping_value:
+                    print("Validation loss has not improved in {} epochs, stopping early".format(
+                        early_stopping_value))
+                    print("Obtained lowest validation loss of: {}".format(best_val_loss))
+                    return training_losses
             if checkpoint_path is not None:
                 try:
                     # torch.save(model.state_dict(),

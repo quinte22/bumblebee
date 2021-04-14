@@ -25,6 +25,7 @@ def main():
     # transformer = MusicTransformer(n_tokens, seq_length,
     #         d_model = 64, n_heads = 8, d_feedforward=256,
     #         depth = 4, positional_encoding=True, relative_pos=True)
+    # set xavier_init = True to run xavier_init optimization 
     transformer = LongMusicTransformer(n_tokens, seq_length,
                                    d_model=64, n_heads=8, d_feedforward=256,
                                    depth=4, positional_encoding=True, relative_pos=False)
