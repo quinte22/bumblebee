@@ -1,2 +1,2 @@
-from .transformer import MusicTransformer
+from .transformer import MusicTransformer, LongMultiheadedAttention
 from .attention import MultiheadedAttention
