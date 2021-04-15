@@ -28,7 +28,8 @@ def main():
     # set xavier_init = True to run xavier_init optimization 
     transformer = LongMusicTransformer(n_tokens, seq_length,
                                    d_model=64, n_heads=8, d_feedforward=256,
-                                   depth=4, positional_encoding=True, relative_pos=False)
+                                   depth=4, positional_encoding=True, relative_pos=False,
+                                   xavier_init=True)
 
     if args.checkpoint is not None:
         state = torch.load(args.checkpoint)
@@ -57,7 +58,7 @@ def main():
     train(transformer, training_sequences, validation_sequences,
                epochs = args.n_epochs, evaluate_per = 1,
                batch_size = batch_size, batches_per_print=100,
-               padding_index=0, checkpoint_path=checkpoint)
+               padding_index=0, checkpoint_path=checkpoint, early_stopping_value=100000)
 
 
 if __name__=="__main__":
