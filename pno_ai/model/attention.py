@@ -196,14 +196,12 @@ class LongMultiheadedAttention(nn.Module):
             del attn_scores
             attn_probs = self.dropout(attn_probs)
             values = values.reshape(t, b, self.heads, s).transpose(0, 1)
-            values *= (9 * 4) ** (-.25)
             attn_output = self._sliding_chunks_matmul_attn_probs_value(
                 attn_probs, values, self.one_sided_attn_window_size
             )
             assert attn_output.size() == (b, t, self.heads, s), "Unexpected size"
             attn_output = attn_output.transpose(0, 1).reshape(t, b, e).contiguous()
             outputs = attn_output.transpose(0, 1)
-            outputs *= (9 * 4) ** (-.25)
             return self.recombine_heads(outputs)
 
         # Compute scaled dot-product self-attention

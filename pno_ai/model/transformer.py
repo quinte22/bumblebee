@@ -247,7 +247,7 @@ class PositionwiseFeedForward(nn.Module):
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, x):
-        return self.w_2(self.dropout(F.relu(self.w_1(x)*((9*4)**(-.25))))) *((9*4)**(-.25))
+        return self.w_2(self.dropout(F.relu(self.w_1(x))))
 
 class SequenceEmbedding(nn.Module):
     """
@@ -259,5 +259,5 @@ class SequenceEmbedding(nn.Module):
         self.emb = nn.Embedding(vocab_size, model_size)
 
     def forward(self, x):
-        x *= (9*4)**(-.25)
+
         return self.emb(x) * math.sqrt(self.d_model)
