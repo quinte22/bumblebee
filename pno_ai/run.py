@@ -46,7 +46,8 @@ def main():
     print(f"MIDI pipeline runtime: {runtime / 60 : .1f}m")
 
     today = datetime.date.today().strftime('%m%d%Y')
-    checkpoint = f"saved_models/tf_{today}"
+    t = str(time.time())
+    checkpoint = f"saved_models/tf_{today}_{t}"
 
     training_sequences = pipeline.encoded_sequences['training']
     validation_sequences = pipeline.encoded_sequences['validation']
