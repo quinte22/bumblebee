@@ -69,6 +69,13 @@ class MusicTransformer(nn.Module):
                 nn.init.constant_(param, 0.0001)
             elif 'weight' in name:
                 nn.init.xavier_normal_(param)
+        for name, param in self.embed.named_parameters():
+            if 'bias' in name:
+                nn.init.constant_(param, 0.0001)
+            elif 'weight' in name:
+                nn.init.normal_(param, mean=0.0, std=self.d_model ** -.05)
+            print(f"initialized {name} : {param}")
+
 
     def forward(self, x, mask=None):
         x = self.embed(x)
@@ -230,10 +237,10 @@ class LongDecoderLayer(nn.Module):
         # Apply dropout to sublayer output, add it to input, and norm.
         attn = self.self_attn(x, mask)
         x = x + self.dropout1(attn)
-        # x = self.norm1(x)
+        x = self.norm1(x)
         ff = self.feed_forward(x)
         x = x + self.dropout2(ff)
-        # x = self.norm2(x)
+        x = self.norm2(x)
 
         return x
 
