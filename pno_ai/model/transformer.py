@@ -67,7 +67,7 @@ class MusicTransformer(nn.Module):
         for name, param in self.layers.named_parameters():
             if 'bias' in name:
                 nn.init.constant_(param, 0.0001)
-            elif 'weight' in name:
+            elif 'weight' in name and 'norm' not in name:
                 nn.init.xavier_normal_(param)
         for name, param in self.embed.named_parameters():
             if 'bias' in name:
