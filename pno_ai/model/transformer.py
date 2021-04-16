@@ -184,7 +184,7 @@ class LongMusicTransformer(nn.Module):
         for name, param in self.layers.named_parameters():
             if 'bias' in name:
                 nn.init.constant_(param, 0.0001)
-            elif 'weight' in name:
+            elif 'weight' in name and 'norm' not in name:
                 nn.init.xavier_normal_(param)
             print(f"initialized {name} : {param}")
         for name, param in self.embed.named_parameters():
@@ -193,7 +193,6 @@ class LongMusicTransformer(nn.Module):
             elif 'weight' in name:
                 nn.init.normal_(param, mean=0.0, std=self.d_model ** -.05)
             print(f"initialized {name} : {param}")
-
 
     def forward(self, x, mask=None):
         x = self.embed(x)
@@ -225,8 +224,8 @@ class LongDecoderLayer(nn.Module):
 
         self.size = size
         # normalize over mean/std of embedding dimension
-        # self.norm1 = nn.LayerNorm(size)
-        # self.norm2 = nn.LayerNorm(size)
+        self.norm1 = nn.LayerNorm(size)
+        self.norm2 = nn.LayerNorm(size)
         self.dropout1 = nn.Dropout(dropout)
         self.dropout2 = nn.Dropout(dropout)
 

@@ -22,14 +22,14 @@ def main():
     n_velocity_bins = 32
     seq_length = 1024
     n_tokens = 256 + sampling_rate + n_velocity_bins
-    # transformer = MusicTransformer(n_tokens, seq_length,
-    #         d_model = 64, n_heads = 8, d_feedforward=256,
-    #         depth = 4, positional_encoding=True, relative_pos=True)
-    # set xavier_init = True to run xavier_init optimization 
-    transformer = LongMusicTransformer(n_tokens, seq_length,
-                                   d_model=64, n_heads=8, d_feedforward=256,
-                                   depth=4, positional_encoding=True, relative_pos=False,
-                                   xavier_init=True)
+    transformer = MusicTransformer(n_tokens, seq_length,
+            d_model = 64, n_heads = 8, d_feedforward=256,
+            depth = 4, positional_encoding=True, relative_pos=True)
+    # set xavier_init = True to run xavier_init optimization
+    # transformer = LongMusicTransformer(n_tokens, seq_length,
+    #                                d_model=64, n_heads=8, d_feedforward=256,
+    #                                depth=4, positional_encoding=True, relative_pos=False,
+    #                                xavier_init=True)
 
     if args.checkpoint is not None:
         state = torch.load(args.checkpoint)
@@ -48,8 +48,8 @@ def main():
 
     today = datetime.date.today().strftime('%m%d%Y')
     t = str(time.time())
-    checkpoint = f"saved_models/tf_{today}_{t}"
-
+    # checkpoint = f"saved_models/tf_{today}_{t}"
+    checkpoint = f"saved_models/tf_transformer_no_opti"
     training_sequences = pipeline.encoded_sequences['training']
     validation_sequences = pipeline.encoded_sequences['validation']
 
