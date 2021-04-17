@@ -1,0 +1,5 @@
+/project/6049244/fenauxlu/bumblebee/pno_ai/model/attention.py:76: UserWarning: This overload of nonzero is deprecated:
+	nonzero()
+Consider using one of the following signatures instead:
+	nonzero(*, bool as_tuple) (Triggered internally at  /pytorch/torch/csrc/utils/python_arg_parser.cpp:766.)
+  wtf = (mask == 0).nonzero().transpose(0,1)

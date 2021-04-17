@@ -1,0 +1,25 @@
+/project/6049244/fenauxlu/bumblebee/pno_ai/model/attention.py:76: UserWarning: This overload of nonzero is deprecated:
+	nonzero()
+Consider using one of the following signatures instead:
+	nonzero(*, bool as_tuple) (Triggered internally at  /pytorch/torch/csrc/utils/python_arg_parser.cpp:766.)
+  wtf = (mask == 0).nonzero().transpose(0,1)
+Traceback (most recent call last):
+  File "run.py", line 59, in <module>
+    main()
+  File "run.py", line 55, in main
+    padding_index=0, checkpoint_path=checkpoint)
+  File "/project/6049244/fenauxlu/bumblebee/pno_ai/train/train.py", line 98, in train
+    y_hat = model(x, x_mask).transpose(1,2)
+  File "/project/6049244/fenauxlu/ScdmsML/venv/lib/python3.6/site-packages/torch/nn/modules/module.py", line 722, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/project/6049244/fenauxlu/bumblebee/pno_ai/model/transformer.py", line 74, in forward
+    x  = layer(x, mask)
+  File "/project/6049244/fenauxlu/ScdmsML/venv/lib/python3.6/site-packages/torch/nn/modules/module.py", line 722, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/project/6049244/fenauxlu/bumblebee/pno_ai/model/transformer.py", line 101, in forward
+    attn = self.self_attn(x, mask)
+  File "/project/6049244/fenauxlu/ScdmsML/venv/lib/python3.6/site-packages/torch/nn/modules/module.py", line 722, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/project/6049244/fenauxlu/bumblebee/pno_ai/model/attention.py", line 57, in forward
+    SRel = self._skew(QEr).contiguous().view(b*h, t, t)
+RuntimeError: CUDA out of memory. Tried to allocate 512.00 MiB (GPU 0; 11.91 GiB total capacity; 10.47 GiB already allocated; 309.25 MiB free; 10.83 GiB reserved in total by PyTorch)
