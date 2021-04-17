@@ -22,11 +22,11 @@ def main():
     n_velocity_bins = 32
     seq_length = 1024
     n_tokens = 256 + sampling_rate + n_velocity_bins
-    early_stopping = 100000   # very high value to basically turn it off
-    # early_stopping = 100   # regular value
+    # early_stopping = 100000   # very high value to basically turn it off
+    early_stopping = 200   # regular value
     transformer = MusicTransformer(n_tokens, seq_length,
             d_model = 64, n_heads = 8, d_feedforward=256,
-            depth = 4, positional_encoding=True, relative_pos=True, xavier_init=True)
+            depth = 4, positional_encoding=True, relative_pos=True, xavier_init=False)
     # set xavier_init = True to run xavier_init optimization
     # transformer = LongMusicTransformer(n_tokens, seq_length,
     #                                d_model=64, n_heads=8, d_feedforward=256,
