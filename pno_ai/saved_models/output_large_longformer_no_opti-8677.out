@@ -1,0 +1,1095 @@
+Parsing 105 midi files in /project/6049244/fenauxlu/bumblebee/pno_ai/data/maestro-v2.0.0/2014...
+Parsing 163 midi files in /project/6049244/fenauxlu/bumblebee/pno_ai/data/maestro-v2.0.0/2011...
+Parsing 125 midi files in /project/6049244/fenauxlu/bumblebee/pno_ai/data/maestro-v2.0.0/2009...
+Parsing 127 midi files in /project/6049244/fenauxlu/bumblebee/pno_ai/data/maestro-v2.0.0/2013...
+Parsing 63 midi files in /project/6049244/fenauxlu/bumblebee/pno_ai/data/maestro-v2.0.0/2015...
+Parsing 147 midi files in /project/6049244/fenauxlu/bumblebee/pno_ai/data/maestro-v2.0.0/2008...
+Parsing 0 midi files in /project/6049244/fenauxlu/bumblebee/pno_ai/data/maestro-v2.0.0...
+Parsing 0 midi files in /project/6049244/fenauxlu/bumblebee/pno_ai/data...
+
+730 midis read, or 5952.1 minutes of music
+730 note sequences extracted
+
+Processing training data...
+657 note sequences
+1,971 stretched note sequences
+36,066 quantized, split samples
+180,330 transposed samples
+0 / 180,330 sequences encoded
+50,000 / 180,330 sequences encoded
+100,000 / 180,330 sequences encoded
+150,000 / 180,330 sequences encoded
+13035 sequences discarded due to brevity
+90805 sequences truncated due to excessive length.
+Encoded training sequences!
+
+Processing validation data...
+73 note sequences
+1,517 quantized, split samples
+0 / 1,517 sequences encoded
+139 sequences discarded due to brevity
+721 sequences truncated due to excessive length.
+Encoded validation sequences!
+
+MIDI pipeline runtime:  17.6m
+GPU is available
+batch 100, loss:  4.92
+accuracy:  0.01
+batch 200, loss:  4.19
+accuracy:  0.03
+batch 300, loss:  4.12
+accuracy:  0.02
+batch 400, loss:  4.11
+accuracy:  0.02
+batch 500, loss:  4.15
+accuracy:  0.02
+batch 600, loss:  4.22
+accuracy:  0.02
+batch 700, loss:  4.10
+accuracy:  0.02
+batch 800, loss:  4.12
+accuracy:  0.02
+batch 900, loss:  4.14
+accuracy:  0.02
+batch 1000, loss:  4.13
+accuracy:  0.02
+batch 1100, loss:  4.03
+accuracy:  0.02
+batch 1200, loss:  4.04
+accuracy:  0.02
+batch 1300, loss:  4.07
+accuracy:  0.02
+batch 1400, loss:  4.18
+accuracy:  0.02
+batch 1500, loss:  4.01
+accuracy:  0.02
+batch 1600, loss:  4.12
+accuracy:  0.01
+batch 1700, loss:  4.19
+accuracy:  0.02
+batch 1800, loss:  4.07
+accuracy:  0.02
+batch 1900, loss:  3.97
+accuracy:  0.01
+batch 2000, loss:  4.01
+accuracy:  0.02
+batch 2100, loss:  4.02
+accuracy:  0.02
+batch 2200, loss:  4.05
+accuracy:  0.02
+batch 2300, loss:  4.06
+accuracy:  0.02
+batch 2400, loss:  4.11
+accuracy:  0.02
+batch 2500, loss:  4.09
+accuracy:  0.02
+batch 2600, loss:  4.05
+accuracy:  0.02
+batch 2700, loss:  3.96
+accuracy:  0.02
+batch 2800, loss:  4.09
+accuracy:  0.02
+batch 2900, loss:  4.01
+accuracy:  0.02
+batch 3000, loss:  4.11
+accuracy:  0.02
+batch 3100, loss:  4.06
+accuracy:  0.02
+batch 3200, loss:  3.95
+accuracy:  0.02
+batch 3300, loss:  4.02
+accuracy:  0.02
+batch 3400, loss:  4.07
+accuracy:  0.02
+batch 3500, loss:  4.05
+accuracy:  0.01
+batch 3600, loss:  4.04
+accuracy:  0.02
+batch 3700, loss:  4.00
+accuracy:  0.02
+batch 3800, loss:  3.99
+accuracy:  0.02
+batch 3900, loss:  4.09
+accuracy:  0.02
+batch 4000, loss:  4.08
+accuracy:  0.02
+batch 4100, loss:  4.01
+accuracy:  0.02
+batch 4200, loss:  4.02
+accuracy:  0.02
+batch 4300, loss:  4.03
+accuracy:  0.02
+batch 4400, loss:  4.08
+accuracy:  0.02
+batch 4500, loss:  4.07
+accuracy:  0.02
+batch 4600, loss:  4.00
+accuracy:  0.02
+batch 4700, loss:  4.08
+accuracy:  0.02
+batch 4800, loss:  4.01
+accuracy:  0.02
+batch 4900, loss:  4.07
+accuracy:  0.02
+batch 5000, loss:  4.01
+accuracy:  0.02
+batch 5100, loss:  3.97
+accuracy:  0.02
+batch 5200, loss:  4.15
+accuracy:  0.02
+batch 5300, loss:  4.06
+accuracy:  0.02
+batch 5400, loss:  4.01
+accuracy:  0.02
+batch 5500, loss:  4.00
+accuracy:  0.01
+batch 5600, loss:  4.04
+accuracy:  0.02
+batch 5700, loss:  4.02
+accuracy:  0.02
+batch 5800, loss:  4.06
+accuracy:  0.02
+batch 5900, loss:  3.98
+accuracy:  0.02
+batch 6000, loss:  4.01
+accuracy:  0.02
+batch 6100, loss:  4.06
+accuracy:  0.02
+batch 6200, loss:  4.04
+accuracy:  0.02
+batch 6300, loss:  4.08
+accuracy:  0.02
+batch 6400, loss:  3.97
+accuracy:  0.02
+batch 6500, loss:  4.02
+accuracy:  0.02
+batch 6600, loss:  4.00
+accuracy:  0.02
+batch 6700, loss:  4.03
+accuracy:  0.02
+batch 6800, loss:  3.98
+accuracy:  0.02
+batch 6900, loss:  3.97
+accuracy:  0.02
+batch 7000, loss:  3.95
+accuracy:  0.02
+batch 7100, loss:  3.96
+accuracy:  0.02
+batch 7200, loss:  4.02
+accuracy:  0.02
+batch 7300, loss:  3.87
+accuracy:  0.02
+batch 7400, loss:  4.06
+accuracy:  0.02
+batch 7500, loss:  3.97
+accuracy:  0.02
+batch 7600, loss:  3.99
+accuracy:  0.02
+batch 7700, loss:  4.10
+accuracy:  0.02
+batch 7800, loss:  3.96
+accuracy:  0.02
+batch 7900, loss:  4.04
+accuracy:  0.02
+batch 8000, loss:  4.04
+accuracy:  0.02
+batch 8100, loss:  4.02
+accuracy:  0.02
+batch 8200, loss:  4.00
+accuracy:  0.02
+batch 8300, loss:  3.97
+accuracy:  0.02
+batch 8400, loss:  3.94
+accuracy:  0.02
+batch 8500, loss:  4.02
+accuracy:  0.02
+batch 8600, loss:  3.86
+accuracy:  0.02
+batch 8700, loss:  3.97
+accuracy:  0.02
+batch 8800, loss:  4.00
+accuracy:  0.02
+batch 8900, loss:  4.03
+accuracy:  0.02
+batch 9000, loss:  4.05
+accuracy:  0.02
+batch 9100, loss:  3.98
+accuracy:  0.02
+batch 9200, loss:  3.92
+accuracy:  0.02
+batch 9300, loss:  3.99
+accuracy:  0.02
+batch 9400, loss:  4.03
+accuracy:  0.02
+batch 9500, loss:  3.93
+accuracy:  0.02
+batch 9600, loss:  3.91
+accuracy:  0.02
+batch 9700, loss:  3.92
+accuracy:  0.02
+batch 9800, loss:  3.94
+accuracy:  0.02
+batch 9900, loss:  3.92
+accuracy:  0.02
+batch 10000, loss:  3.96
+accuracy:  0.02
+batch 10100, loss:  4.02
+accuracy:  0.02
+batch 10200, loss:  3.97
+accuracy:  0.02
+batch 10300, loss:  4.00
+accuracy:  0.02
+batch 10400, loss:  4.02
+accuracy:  0.02
+epoch: 1/5 | time: 15m
+Checkpoint saved!
+validation loss: 4.00
+validation accuracy: 0.03
+batch 100, loss:  4.02
+accuracy:  0.02
+batch 200, loss:  4.04
+accuracy:  0.02
+batch 300, loss:  4.03
+accuracy:  0.02
+batch 400, loss:  4.03
+accuracy:  0.02
+batch 500, loss:  4.03
+accuracy:  0.02
+batch 600, loss:  4.02
+accuracy:  0.02
+batch 700, loss:  4.03
+accuracy:  0.02
+batch 800, loss:  4.03
+accuracy:  0.02
+batch 900, loss:  4.03
+accuracy:  0.02
+batch 1000, loss:  4.03
+accuracy:  0.02
+batch 1100, loss:  4.03
+accuracy:  0.02
+batch 1200, loss:  4.02
+accuracy:  0.02
+batch 1300, loss:  4.03
+accuracy:  0.02
+batch 1400, loss:  4.03
+accuracy:  0.02
+batch 1500, loss:  4.02
+accuracy:  0.02
+batch 1600, loss:  4.03
+accuracy:  0.02
+batch 1700, loss:  4.03
+accuracy:  0.02
+batch 1800, loss:  4.01
+accuracy:  0.02
+batch 1900, loss:  4.02
+accuracy:  0.02
+batch 2000, loss:  4.02
+accuracy:  0.02
+batch 2100, loss:  4.02
+accuracy:  0.02
+batch 2200, loss:  4.02
+accuracy:  0.02
+batch 2300, loss:  4.03
+accuracy:  0.02
+batch 2400, loss:  4.02
+accuracy:  0.02
+batch 2500, loss:  4.02
+accuracy:  0.02
+batch 2600, loss:  4.01
+accuracy:  0.02
+batch 2700, loss:  4.02
+accuracy:  0.02
+batch 2800, loss:  4.02
+accuracy:  0.02
+batch 2900, loss:  4.03
+accuracy:  0.02
+batch 3000, loss:  4.01
+accuracy:  0.02
+batch 3100, loss:  4.01
+accuracy:  0.02
+batch 3200, loss:  4.02
+accuracy:  0.02
+batch 3300, loss:  4.01
+accuracy:  0.02
+batch 3400, loss:  4.02
+accuracy:  0.02
+batch 3500, loss:  4.01
+accuracy:  0.02
+batch 3600, loss:  4.00
+accuracy:  0.02
+batch 3700, loss:  4.00
+accuracy:  0.02
+batch 3800, loss:  4.00
+accuracy:  0.02
+batch 3900, loss:  3.99
+accuracy:  0.02
+batch 4000, loss:  4.01
+accuracy:  0.02
+batch 4100, loss:  4.00
+accuracy:  0.02
+batch 4200, loss:  4.00
+accuracy:  0.02
+batch 4300, loss:  4.01
+accuracy:  0.02
+batch 4400, loss:  4.00
+accuracy:  0.02
+batch 4500, loss:  4.00
+accuracy:  0.02
+batch 4600, loss:  4.00
+accuracy:  0.02
+batch 4700, loss:  3.99
+accuracy:  0.02
+batch 4800, loss:  4.00
+accuracy:  0.02
+batch 4900, loss:  4.00
+accuracy:  0.02
+batch 5000, loss:  3.99
+accuracy:  0.02
+batch 5100, loss:  3.99
+accuracy:  0.02
+batch 5200, loss:  3.99
+accuracy:  0.02
+batch 5300, loss:  4.00
+accuracy:  0.02
+batch 5400, loss:  3.98
+accuracy:  0.02
+batch 5500, loss:  4.00
+accuracy:  0.02
+batch 5600, loss:  4.01
+accuracy:  0.02
+batch 5700, loss:  3.99
+accuracy:  0.02
+batch 5800, loss:  3.99
+accuracy:  0.02
+batch 5900, loss:  3.99
+accuracy:  0.02
+batch 6000, loss:  3.99
+accuracy:  0.02
+batch 6100, loss:  4.00
+accuracy:  0.02
+batch 6200, loss:  3.99
+accuracy:  0.02
+batch 6300, loss:  3.99
+accuracy:  0.02
+batch 6400, loss:  3.99
+accuracy:  0.02
+batch 6500, loss:  3.98
+accuracy:  0.02
+batch 6600, loss:  3.99
+accuracy:  0.02
+batch 6700, loss:  3.98
+accuracy:  0.02
+batch 6800, loss:  3.99
+accuracy:  0.02
+batch 6900, loss:  3.98
+accuracy:  0.02
+batch 7000, loss:  3.98
+accuracy:  0.02
+batch 7100, loss:  3.99
+accuracy:  0.02
+batch 7200, loss:  3.98
+accuracy:  0.02
+batch 7300, loss:  3.99
+accuracy:  0.02
+batch 7400, loss:  3.98
+accuracy:  0.02
+batch 7500, loss:  3.99
+accuracy:  0.02
+batch 7600, loss:  3.98
+accuracy:  0.02
+batch 7700, loss:  3.99
+accuracy:  0.02
+batch 7800, loss:  3.97
+accuracy:  0.02
+batch 7900, loss:  3.98
+accuracy:  0.02
+batch 8000, loss:  3.97
+accuracy:  0.02
+batch 8100, loss:  3.98
+accuracy:  0.02
+batch 8200, loss:  3.98
+accuracy:  0.02
+batch 8300, loss:  3.98
+accuracy:  0.02
+batch 8400, loss:  3.98
+accuracy:  0.02
+batch 8500, loss:  3.97
+accuracy:  0.02
+batch 8600, loss:  3.97
+accuracy:  0.02
+batch 8700, loss:  3.98
+accuracy:  0.02
+batch 8800, loss:  3.97
+accuracy:  0.02
+batch 8900, loss:  3.97
+accuracy:  0.02
+batch 9000, loss:  3.97
+accuracy:  0.02
+batch 9100, loss:  3.97
+accuracy:  0.02
+batch 9200, loss:  3.96
+accuracy:  0.02
+batch 9300, loss:  3.97
+accuracy:  0.02
+batch 9400, loss:  3.97
+accuracy:  0.02
+batch 9500, loss:  3.97
+accuracy:  0.02
+batch 9600, loss:  3.96
+accuracy:  0.02
+batch 9700, loss:  3.97
+accuracy:  0.02
+batch 9800, loss:  3.97
+accuracy:  0.02
+batch 9900, loss:  3.98
+accuracy:  0.02
+batch 10000, loss:  3.96
+accuracy:  0.02
+batch 10100, loss:  3.97
+accuracy:  0.02
+batch 10200, loss:  3.96
+accuracy:  0.02
+batch 10300, loss:  3.96
+accuracy:  0.02
+batch 10400, loss:  3.97
+accuracy:  0.02
+epoch: 2/5 | time: 14m
+Checkpoint saved!
+validation loss: 3.93
+validation accuracy: 0.02
+batch 100, loss:  3.96
+accuracy:  0.02
+batch 200, loss:  3.97
+accuracy:  0.02
+batch 300, loss:  3.96
+accuracy:  0.02
+batch 400, loss:  3.96
+accuracy:  0.02
+batch 500, loss:  3.96
+accuracy:  0.02
+batch 600, loss:  3.96
+accuracy:  0.02
+batch 700, loss:  3.95
+accuracy:  0.02
+batch 800, loss:  3.96
+accuracy:  0.02
+batch 900, loss:  3.96
+accuracy:  0.02
+batch 1000, loss:  3.96
+accuracy:  0.02
+batch 1100, loss:  3.96
+accuracy:  0.02
+batch 1200, loss:  3.96
+accuracy:  0.02
+batch 1300, loss:  3.95
+accuracy:  0.02
+batch 1400, loss:  3.96
+accuracy:  0.02
+batch 1500, loss:  3.96
+accuracy:  0.02
+batch 1600, loss:  3.95
+accuracy:  0.02
+batch 1700, loss:  3.96
+accuracy:  0.02
+batch 1800, loss:  3.96
+accuracy:  0.02
+batch 1900, loss:  3.96
+accuracy:  0.02
+batch 2000, loss:  3.95
+accuracy:  0.02
+batch 2100, loss:  3.96
+accuracy:  0.02
+batch 2200, loss:  3.95
+accuracy:  0.02
+batch 2300, loss:  3.96
+accuracy:  0.02
+batch 2400, loss:  3.95
+accuracy:  0.02
+batch 2500, loss:  3.95
+accuracy:  0.02
+batch 2600, loss:  3.95
+accuracy:  0.02
+batch 2700, loss:  3.95
+accuracy:  0.02
+batch 2800, loss:  3.96
+accuracy:  0.02
+batch 2900, loss:  3.94
+accuracy:  0.02
+batch 3000, loss:  3.95
+accuracy:  0.02
+batch 3100, loss:  3.95
+accuracy:  0.02
+batch 3200, loss:  3.94
+accuracy:  0.02
+batch 3300, loss:  3.95
+accuracy:  0.02
+batch 3400, loss:  3.94
+accuracy:  0.02
+batch 3500, loss:  3.95
+accuracy:  0.02
+batch 3600, loss:  3.94
+accuracy:  0.02
+batch 3700, loss:  3.95
+accuracy:  0.02
+batch 3800, loss:  3.94
+accuracy:  0.02
+batch 3900, loss:  3.94
+accuracy:  0.02
+batch 4000, loss:  3.94
+accuracy:  0.02
+batch 4100, loss:  3.95
+accuracy:  0.02
+batch 4200, loss:  3.94
+accuracy:  0.02
+batch 4300, loss:  3.94
+accuracy:  0.02
+batch 4400, loss:  3.93
+accuracy:  0.02
+batch 4500, loss:  3.94
+accuracy:  0.02
+batch 4600, loss:  3.93
+accuracy:  0.02
+batch 4700, loss:  3.94
+accuracy:  0.02
+batch 4800, loss:  3.93
+accuracy:  0.02
+batch 4900, loss:  3.93
+accuracy:  0.02
+batch 5000, loss:  3.93
+accuracy:  0.02
+batch 5100, loss:  3.93
+accuracy:  0.02
+batch 5200, loss:  3.93
+accuracy:  0.02
+batch 5300, loss:  3.93
+accuracy:  0.02
+batch 5400, loss:  3.94
+accuracy:  0.02
+batch 5500, loss:  3.93
+accuracy:  0.02
+batch 5600, loss:  3.93
+accuracy:  0.02
+batch 5700, loss:  3.93
+accuracy:  0.02
+batch 5800, loss:  3.94
+accuracy:  0.02
+batch 5900, loss:  3.93
+accuracy:  0.02
+batch 6000, loss:  3.93
+accuracy:  0.02
+batch 6100, loss:  3.93
+accuracy:  0.02
+batch 6200, loss:  3.93
+accuracy:  0.02
+batch 6300, loss:  3.93
+accuracy:  0.02
+batch 6400, loss:  3.93
+accuracy:  0.02
+batch 6500, loss:  3.92
+accuracy:  0.02
+batch 6600, loss:  3.93
+accuracy:  0.02
+batch 6700, loss:  3.93
+accuracy:  0.02
+batch 6800, loss:  3.93
+accuracy:  0.02
+batch 6900, loss:  3.93
+accuracy:  0.02
+batch 7000, loss:  3.92
+accuracy:  0.02
+batch 7100, loss:  3.92
+accuracy:  0.02
+batch 7200, loss:  3.93
+accuracy:  0.02
+batch 7300, loss:  3.92
+accuracy:  0.02
+batch 7400, loss:  3.92
+accuracy:  0.02
+batch 7500, loss:  3.92
+accuracy:  0.02
+batch 7600, loss:  3.93
+accuracy:  0.02
+batch 7700, loss:  3.92
+accuracy:  0.02
+batch 7800, loss:  3.92
+accuracy:  0.02
+batch 7900, loss:  3.91
+accuracy:  0.02
+batch 8000, loss:  3.92
+accuracy:  0.02
+batch 8100, loss:  3.92
+accuracy:  0.02
+batch 8200, loss:  3.92
+accuracy:  0.02
+batch 8300, loss:  3.92
+accuracy:  0.02
+batch 8400, loss:  3.91
+accuracy:  0.02
+batch 8500, loss:  3.91
+accuracy:  0.02
+batch 8600, loss:  3.91
+accuracy:  0.02
+batch 8700, loss:  3.92
+accuracy:  0.02
+batch 8800, loss:  3.91
+accuracy:  0.02
+batch 8900, loss:  3.92
+accuracy:  0.02
+batch 9000, loss:  3.91
+accuracy:  0.02
+batch 9100, loss:  3.91
+accuracy:  0.02
+batch 9200, loss:  3.92
+accuracy:  0.02
+batch 9300, loss:  3.92
+accuracy:  0.02
+batch 9400, loss:  3.91
+accuracy:  0.02
+batch 9500, loss:  3.92
+accuracy:  0.02
+batch 9600, loss:  3.91
+accuracy:  0.02
+batch 9700, loss:  3.92
+accuracy:  0.02
+batch 9800, loss:  3.91
+accuracy:  0.02
+batch 9900, loss:  3.91
+accuracy:  0.02
+batch 10000, loss:  3.91
+accuracy:  0.02
+batch 10100, loss:  3.91
+accuracy:  0.02
+batch 10200, loss:  3.90
+accuracy:  0.02
+batch 10300, loss:  3.91
+accuracy:  0.02
+batch 10400, loss:  3.91
+accuracy:  0.02
+epoch: 3/5 | time: 15m
+Checkpoint saved!
+validation loss: 3.87
+validation accuracy: 0.02
+batch 100, loss:  3.91
+accuracy:  0.02
+batch 200, loss:  3.92
+accuracy:  0.02
+batch 300, loss:  3.91
+accuracy:  0.02
+batch 400, loss:  3.91
+accuracy:  0.02
+batch 500, loss:  3.91
+accuracy:  0.02
+batch 600, loss:  3.91
+accuracy:  0.02
+batch 700, loss:  3.91
+accuracy:  0.02
+batch 800, loss:  3.91
+accuracy:  0.02
+batch 900, loss:  3.91
+accuracy:  0.02
+batch 1000, loss:  3.91
+accuracy:  0.02
+batch 1100, loss:  3.92
+accuracy:  0.02
+batch 1200, loss:  3.90
+accuracy:  0.02
+batch 1300, loss:  3.91
+accuracy:  0.02
+batch 1400, loss:  3.90
+accuracy:  0.02
+batch 1500, loss:  3.91
+accuracy:  0.02
+batch 1600, loss:  3.91
+accuracy:  0.02
+batch 1700, loss:  3.89
+accuracy:  0.02
+batch 1800, loss:  3.90
+accuracy:  0.02
+batch 1900, loss:  3.90
+accuracy:  0.02
+batch 2000, loss:  3.90
+accuracy:  0.02
+batch 2100, loss:  3.90
+accuracy:  0.02
+batch 2200, loss:  3.90
+accuracy:  0.02
+batch 2300, loss:  3.90
+accuracy:  0.02
+batch 2400, loss:  3.90
+accuracy:  0.02
+batch 2500, loss:  3.90
+accuracy:  0.02
+batch 2600, loss:  3.91
+accuracy:  0.02
+batch 2700, loss:  3.91
+accuracy:  0.02
+batch 2800, loss:  3.90
+accuracy:  0.02
+batch 2900, loss:  3.90
+accuracy:  0.02
+batch 3000, loss:  3.91
+accuracy:  0.02
+batch 3100, loss:  3.90
+accuracy:  0.02
+batch 3200, loss:  3.90
+accuracy:  0.02
+batch 3300, loss:  3.90
+accuracy:  0.02
+batch 3400, loss:  3.90
+accuracy:  0.02
+batch 3500, loss:  3.90
+accuracy:  0.02
+batch 3600, loss:  3.90
+accuracy:  0.02
+batch 3700, loss:  3.90
+accuracy:  0.02
+batch 3800, loss:  3.90
+accuracy:  0.02
+batch 3900, loss:  3.89
+accuracy:  0.02
+batch 4000, loss:  3.89
+accuracy:  0.02
+batch 4100, loss:  3.90
+accuracy:  0.02
+batch 4200, loss:  3.89
+accuracy:  0.02
+batch 4300, loss:  3.90
+accuracy:  0.02
+batch 4400, loss:  3.90
+accuracy:  0.02
+batch 4500, loss:  3.90
+accuracy:  0.02
+batch 4600, loss:  3.89
+accuracy:  0.02
+batch 4700, loss:  3.89
+accuracy:  0.02
+batch 4800, loss:  3.90
+accuracy:  0.02
+batch 4900, loss:  3.89
+accuracy:  0.02
+batch 5000, loss:  3.89
+accuracy:  0.02
+batch 5100, loss:  3.90
+accuracy:  0.02
+batch 5200, loss:  3.89
+accuracy:  0.02
+batch 5300, loss:  3.89
+accuracy:  0.02
+batch 5400, loss:  3.89
+accuracy:  0.02
+batch 5500, loss:  3.89
+accuracy:  0.02
+batch 5600, loss:  3.89
+accuracy:  0.02
+batch 5700, loss:  3.89
+accuracy:  0.02
+batch 5800, loss:  3.89
+accuracy:  0.02
+batch 5900, loss:  3.89
+accuracy:  0.02
+batch 6000, loss:  3.89
+accuracy:  0.02
+batch 6100, loss:  3.89
+accuracy:  0.02
+batch 6200, loss:  3.90
+accuracy:  0.02
+batch 6300, loss:  3.89
+accuracy:  0.02
+batch 6400, loss:  3.88
+accuracy:  0.02
+batch 6500, loss:  3.88
+accuracy:  0.02
+batch 6600, loss:  3.88
+accuracy:  0.02
+batch 6700, loss:  3.88
+accuracy:  0.02
+batch 6800, loss:  3.88
+accuracy:  0.02
+batch 6900, loss:  3.89
+accuracy:  0.02
+batch 7000, loss:  3.89
+accuracy:  0.02
+batch 7100, loss:  3.89
+accuracy:  0.02
+batch 7200, loss:  3.89
+accuracy:  0.02
+batch 7300, loss:  3.88
+accuracy:  0.02
+batch 7400, loss:  3.88
+accuracy:  0.02
+batch 7500, loss:  3.89
+accuracy:  0.02
+batch 7600, loss:  3.87
+accuracy:  0.02
+batch 7700, loss:  3.88
+accuracy:  0.02
+batch 7800, loss:  3.88
+accuracy:  0.02
+batch 7900, loss:  3.88
+accuracy:  0.02
+batch 8000, loss:  3.88
+accuracy:  0.02
+batch 8100, loss:  3.88
+accuracy:  0.02
+batch 8200, loss:  3.88
+accuracy:  0.02
+batch 8300, loss:  3.88
+accuracy:  0.02
+batch 8400, loss:  3.88
+accuracy:  0.02
+batch 8500, loss:  3.88
+accuracy:  0.02
+batch 8600, loss:  3.88
+accuracy:  0.02
+batch 8700, loss:  3.89
+accuracy:  0.02
+batch 8800, loss:  3.88
+accuracy:  0.02
+batch 8900, loss:  3.88
+accuracy:  0.02
+batch 9000, loss:  3.89
+accuracy:  0.02
+batch 9100, loss:  3.88
+accuracy:  0.02
+batch 9200, loss:  3.88
+accuracy:  0.02
+batch 9300, loss:  3.88
+accuracy:  0.02
+batch 9400, loss:  3.87
+accuracy:  0.02
+batch 9500, loss:  3.89
+accuracy:  0.02
+batch 9600, loss:  3.88
+accuracy:  0.02
+batch 9700, loss:  3.88
+accuracy:  0.02
+batch 9800, loss:  3.88
+accuracy:  0.02
+batch 9900, loss:  3.88
+accuracy:  0.02
+batch 10000, loss:  3.88
+accuracy:  0.02
+batch 10100, loss:  3.87
+accuracy:  0.02
+batch 10200, loss:  3.88
+accuracy:  0.02
+batch 10300, loss:  3.88
+accuracy:  0.02
+batch 10400, loss:  3.88
+accuracy:  0.02
+epoch: 4/5 | time: 15m
+Checkpoint saved!
+validation loss: 3.84
+validation accuracy: 0.02
+batch 100, loss:  3.88
+accuracy:  0.02
+batch 200, loss:  3.88
+accuracy:  0.02
+batch 300, loss:  3.87
+accuracy:  0.02
+batch 400, loss:  3.87
+accuracy:  0.02
+batch 500, loss:  3.87
+accuracy:  0.02
+batch 600, loss:  3.88
+accuracy:  0.02
+batch 700, loss:  3.88
+accuracy:  0.02
+batch 800, loss:  3.88
+accuracy:  0.02
+batch 900, loss:  3.88
+accuracy:  0.02
+batch 1000, loss:  3.87
+accuracy:  0.02
+batch 1100, loss:  3.87
+accuracy:  0.02
+batch 1200, loss:  3.88
+accuracy:  0.02
+batch 1300, loss:  3.88
+accuracy:  0.02
+batch 1400, loss:  3.87
+accuracy:  0.02
+batch 1500, loss:  3.86
+accuracy:  0.02
+batch 1600, loss:  3.87
+accuracy:  0.02
+batch 1700, loss:  3.88
+accuracy:  0.02
+batch 1800, loss:  3.88
+accuracy:  0.02
+batch 1900, loss:  3.88
+accuracy:  0.02
+batch 2000, loss:  3.87
+accuracy:  0.02
+batch 2100, loss:  3.88
+accuracy:  0.02
+batch 2200, loss:  3.87
+accuracy:  0.02
+batch 2300, loss:  3.87
+accuracy:  0.02
+batch 2400, loss:  3.87
+accuracy:  0.02
+batch 2500, loss:  3.88
+accuracy:  0.02
+batch 2600, loss:  3.87
+accuracy:  0.02
+batch 2700, loss:  3.87
+accuracy:  0.02
+batch 2800, loss:  3.87
+accuracy:  0.02
+batch 2900, loss:  3.87
+accuracy:  0.02
+batch 3000, loss:  3.88
+accuracy:  0.02
+batch 3100, loss:  3.87
+accuracy:  0.02
+batch 3200, loss:  3.87
+accuracy:  0.02
+batch 3300, loss:  3.87
+accuracy:  0.02
+batch 3400, loss:  3.88
+accuracy:  0.02
+batch 3500, loss:  3.88
+accuracy:  0.02
+batch 3600, loss:  3.88
+accuracy:  0.02
+batch 3700, loss:  3.86
+accuracy:  0.02
+batch 3800, loss:  3.87
+accuracy:  0.02
+batch 3900, loss:  3.87
+accuracy:  0.02
+batch 4000, loss:  3.87
+accuracy:  0.02
+batch 4100, loss:  3.88
+accuracy:  0.02
+batch 4200, loss:  3.87
+accuracy:  0.02
+batch 4300, loss:  3.87
+accuracy:  0.02
+batch 4400, loss:  3.88
+accuracy:  0.02
+batch 4500, loss:  3.87
+accuracy:  0.02
+batch 4600, loss:  3.87
+accuracy:  0.02
+batch 4700, loss:  3.87
+accuracy:  0.02
+batch 4800, loss:  3.87
+accuracy:  0.02
+batch 4900, loss:  3.87
+accuracy:  0.02
+batch 5000, loss:  3.87
+accuracy:  0.02
+batch 5100, loss:  3.87
+accuracy:  0.02
+batch 5200, loss:  3.88
+accuracy:  0.02
+batch 5300, loss:  3.87
+accuracy:  0.02
+batch 5400, loss:  3.87
+accuracy:  0.02
+batch 5500, loss:  3.87
+accuracy:  0.02
+batch 5600, loss:  3.87
+accuracy:  0.02
+batch 5700, loss:  3.87
+accuracy:  0.02
+batch 5800, loss:  3.87
+accuracy:  0.02
+batch 5900, loss:  3.88
+accuracy:  0.02
+batch 6000, loss:  3.86
+accuracy:  0.02
+batch 6100, loss:  3.87
+accuracy:  0.02
+batch 6200, loss:  3.87
+accuracy:  0.02
+batch 6300, loss:  3.87
+accuracy:  0.02
+batch 6400, loss:  3.87
+accuracy:  0.02
+batch 6500, loss:  3.87
+accuracy:  0.02
+batch 6600, loss:  3.87
+accuracy:  0.02
+batch 6700, loss:  3.86
+accuracy:  0.02
+batch 6800, loss:  3.86
+accuracy:  0.02
+batch 6900, loss:  3.87
+accuracy:  0.02
+batch 7000, loss:  3.87
+accuracy:  0.02
+batch 7100, loss:  3.87
+accuracy:  0.02
+batch 7200, loss:  3.87
+accuracy:  0.02
+batch 7300, loss:  3.87
+accuracy:  0.02
+batch 7400, loss:  3.87
+accuracy:  0.02
+batch 7500, loss:  3.87
+accuracy:  0.02
+batch 7600, loss:  3.86
+accuracy:  0.02
+batch 7700, loss:  3.85
+accuracy:  0.02
+batch 7800, loss:  3.87
+accuracy:  0.02
+batch 7900, loss:  3.87
+accuracy:  0.02
+batch 8000, loss:  3.87
+accuracy:  0.02
+batch 8100, loss:  3.87
+accuracy:  0.02
+batch 8200, loss:  3.87
+accuracy:  0.02
+batch 8300, loss:  3.87
+accuracy:  0.02
+batch 8400, loss:  3.87
+accuracy:  0.02
+batch 8500, loss:  3.86
+accuracy:  0.02
+batch 8600, loss:  3.87
+accuracy:  0.02
+batch 8700, loss:  3.88
+accuracy:  0.02
+batch 8800, loss:  3.86
+accuracy:  0.02
+batch 8900, loss:  3.87
+accuracy:  0.02
+batch 9000, loss:  3.86
+accuracy:  0.02
+batch 9100, loss:  3.86
+accuracy:  0.02
+batch 9200, loss:  3.86
+accuracy:  0.02
+batch 9300, loss:  3.87
+accuracy:  0.02
+batch 9400, loss:  3.87
+accuracy:  0.02
+batch 9500, loss:  3.86
+accuracy:  0.02
+batch 9600, loss:  3.87
+accuracy:  0.02
+batch 9700, loss:  3.86
+accuracy:  0.02
+batch 9800, loss:  3.87
+accuracy:  0.02
+batch 9900, loss:  3.87
+accuracy:  0.02
+batch 10000, loss:  3.87
+accuracy:  0.02
+batch 10100, loss:  3.87
+accuracy:  0.02
+batch 10200, loss:  3.86
+accuracy:  0.02
+batch 10300, loss:  3.86
+accuracy:  0.02
+batch 10400, loss:  3.86
+accuracy:  0.02
+epoch: 5/5 | time: 14m
+Checkpoint saved!
+validation loss: 3.83
+validation accuracy: 0.02
