@@ -7,7 +7,7 @@ import torch.nn as nn
 from random import shuffle
 from preprocess import PreprocessingPipeline
 from train import train
-from model import MusicTransformer, LongMusicTransformer
+from model import MusicTransformer, LongMusicTransformer, LSTMClassifier
 import argparse
 
 def main():
@@ -28,11 +28,12 @@ def main():
     #         d_model = 64, n_heads = 8, d_feedforward=256,
     #         depth = 4, positional_encoding=True, relative_pos=True, xavier_init=True)
     # set xavier_init = True to run xavier_init optimization
-    transformer = LongMusicTransformer(n_tokens, seq_length,
-                                   d_model=64, n_heads=8, d_feedforward=256,
-                                   depth=4, positional_encoding=True, relative_pos=False,
-                                   xavier_init=True)
-
+    # transformer = LongMusicTransformer(n_tokens, seq_length,
+                                  #  d_model=64, n_heads=8, d_feedforward=256,
+                                  #  depth=4, positional_encoding=True, relative_pos=False,
+                                  #  xavier_init=True)
+    transformer = LSTMClassifier(input_dim=1, hidden_dim=413, label_size=413,
+                                n_tokens=n_tokens, xavier_init=False)
     if args.checkpoint is not None:
         state = torch.load(args.checkpoint)
         transformer.load_state_dict(state)

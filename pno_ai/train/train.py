@@ -102,10 +102,14 @@ def train(model, training_data, validation_data,
             x, y, x_mask = batch_to_tensors(batch, model.n_tokens,
                     max_length)
             y_hat = model(x, x_mask).transpose(1,2)
+            # print('y_hat {}'.format(y_hat.size()))
+            # print('y {}'.format(y.size()))
 
             #shape: (batch_size, n_tokens, seq_length)
 
             loss = loss_function(y_hat, y)
+            # print('loss {}'.format(loss))
+
 
             #detach hidden state from the computation graph; we don't need its gradient
             #clear old gradients from previous step

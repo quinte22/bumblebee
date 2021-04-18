@@ -273,7 +273,7 @@ class LSTMClassifier(nn.Module):
     """
     A regular one layer LSTM classifier using LSTMCell -> FFNetwork structure
     """
-    def __init__(self, input_dim, hidden_dim, label_size, n_token, device=torch.device("cuda"), dropout_rate=0.1, xavier_init=False):
+    def __init__(self, input_dim, hidden_dim, label_size, n_tokens, device=torch.device("cuda"), dropout_rate=0.1, xavier_init=False):
         super().__init__()
         self.lstm = nn.LSTMCell(input_dim, hidden_dim)
         self.hidden2ff = nn.Linear(hidden_dim,  int(np.sqrt(hidden_dim)))
@@ -282,6 +282,7 @@ class LSTMClassifier(nn.Module):
         self.sigmoid = nn.Sigmoid()
         self.dropout = nn.Dropout(dropout_rate)
         self.device = device
+        self.n_tokens = n_tokens
         if xavier_init:
             self.initialize_weights()
         print(input_dim)
@@ -309,7 +310,7 @@ class LSTMClassifier(nn.Module):
         cs = torch.zeros(x.size(0), self.hidden_dim).to(self.device)
 
         predictions = []
-        x = torch.unsqueeze(x, -1)
+        x = torch.unsqueeze(x, -1).to(torch.float)
 
         for i in range(x.size()[1]):
             hs, cs = self.lstm(x[:, i], (hs, cs))
@@ -318,4 +319,5 @@ class LSTMClassifier(nn.Module):
         predictions = torch.stack(predictions, dim=1)
         predictions = self.dropout(predictions)
         predictions = self.hidden2ff(predictions)
-        return self.sigmoid(self.ff2label(predictions))
+        predictions = self.sigmoid(self.ff2label(predictions))
+        return predictions
