@@ -267,3 +267,55 @@ class SequenceEmbedding(nn.Module):
     def forward(self, x):
 
         return self.emb(x) * math.sqrt(self.d_model)
+
+
+class LSTMClassifier(nn.Module):
+    """
+    A regular one layer LSTM classifier using LSTMCell -> FFNetwork structure
+    """
+    def __init__(self, input_dim, hidden_dim, label_size, n_token, device=torch.device("cuda"), dropout_rate=0.1, xavier_init=False):
+        super().__init__()
+        self.lstm = nn.LSTMCell(input_dim, hidden_dim)
+        self.hidden2ff = nn.Linear(hidden_dim,  int(np.sqrt(hidden_dim)))
+        self.ff2label = nn.Linear(int(np.sqrt(hidden_dim)), label_size)
+        self.hidden_dim = hidden_dim
+        self.sigmoid = nn.Sigmoid()
+        self.dropout = nn.Dropout(dropout_rate)
+        self.device = device
+        if xavier_init:
+            self.initialize_weights()
+        print(input_dim)
+
+    def initialize_weights(self):
+        for name, param in self.lstm.named_parameters():
+            if 'bias' in name:
+                nn.init.constant_(param, 0.0001)
+            elif 'weight' in name:
+                nn.init.xavier_normal_(param)
+        for name, param in self.hidden2ff.named_parameters():
+            if 'bias' in name:
+                nn.init.constant_(param, 0.0001)
+            elif 'weight' in name:
+                nn.init.xavier_normal_(param)
+        for name, param in self.ff2label.named_parameters():
+            if 'bias' in name:
+                nn.init.constant_(param, 0.0001)
+            elif 'weight' in name:
+                nn.init.xavier_normal_(param)
+
+    def forward(self, x, mask):
+
+        hs = torch.zeros(x.size(0), self.hidden_dim).to(self.device)
+        cs = torch.zeros(x.size(0), self.hidden_dim).to(self.device)
+
+        predictions = []
+        x = torch.unsqueeze(x, -1)
+
+        for i in range(x.size()[1]):
+            hs, cs = self.lstm(x[:, i], (hs, cs))
+            predictions.append(hs)
+
+        predictions = torch.stack(predictions, dim=1)
+        predictions = self.dropout(predictions)
+        predictions = self.hidden2ff(predictions)
+        return self.sigmoid(self.ff2label(predictions))
