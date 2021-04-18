@@ -26,7 +26,7 @@ def main():
     early_stopping = 200   # regular value
     transformer = MusicTransformer(n_tokens, seq_length,
             d_model = 64, n_heads = 8, d_feedforward=256,
-            depth = 4, positional_encoding=True, relative_pos=True, xavier_init=False)
+            depth = 4, positional_encoding=True, relative_pos=True, xavier_init=True)
     # set xavier_init = True to run xavier_init optimization
     # transformer = LongMusicTransformer(n_tokens, seq_length,
     #                                d_model=64, n_heads=8, d_feedforward=256,
@@ -51,7 +51,7 @@ def main():
     today = datetime.date.today().strftime('%m%d%Y')
     t = str(time.time())
     # checkpoint = f"saved_models/tf_{today}_{t}"
-    checkpoint = f"saved_models/tf_transformer_init"
+    checkpoint = f"saved_models/tf_transformer_both"
     training_sequences = pipeline.encoded_sequences['training']
     validation_sequences = pipeline.encoded_sequences['validation']
 
