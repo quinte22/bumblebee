@@ -88,7 +88,9 @@ def sample(model, sample_length, prime_sequence=[], temperature=1):
     model.eval()
     if len(prime_sequence) == 0:
         #if no prime is provided, randomly select a starting event
-        input_sequence = [np.random.randint(model.n_tokens)]
+        input_sequence = []
+        for j in sample_length:
+            input_sequence.append(np.random.randint(model.n_tokens))
     else:
         input_sequence = prime_sequence.copy()
 
