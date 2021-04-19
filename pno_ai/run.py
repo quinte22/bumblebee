@@ -33,7 +33,7 @@ def main():
                                   #  depth=4, positional_encoding=True, relative_pos=False,
                                   #  xavier_init=True)
     transformer = LSTMClassifier(input_dim=1, hidden_dim=413, label_size=413,
-                                n_tokens=n_tokens, xavier_init=False)
+                                n_tokens=n_tokens, xavier_init=True)
     if args.checkpoint is not None:
         state = torch.load(args.checkpoint)
         transformer.load_state_dict(state)
@@ -52,7 +52,7 @@ def main():
     today = datetime.date.today().strftime('%m%d%Y')
     t = str(time.time())
     # checkpoint = f"saved_models/tf_{today}_{t}"
-    checkpoint = f"saved_models/tf_longformer_both"
+    checkpoint = f"saved_models/tf_lstm_both"
     training_sequences = pipeline.encoded_sequences['training']
     validation_sequences = pipeline.encoded_sequences['validation']
 
